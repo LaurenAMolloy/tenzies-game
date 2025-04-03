@@ -1,8 +1,8 @@
 import React from 'react'
 
-export default function RollBtn({generateAllNewDice, setRandomNumbers}) {
+export default function RollBtn({generateAllNewDice, setDice}) {
     function handleRoll(){
-        setRandomNumbers(generateAllNewDice())
+        setDice(generateAllNewDice())
     }
 
   return (

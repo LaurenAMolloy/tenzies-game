@@ -2,10 +2,12 @@ import React from 'react'
 import Die from '../Die'
 import RollBtn from '../rollBtn'
 import  { useState } from 'react'
+import { nanoid } from 'nanoid'
 
 export default function Main() {
-
-    const [randomNumbers, setRandomNumbers] = useState(generateAllNewDice())
+    //Initial Value set to an object created by the generateAllNewDice Function
+    const [dice, setDice] = useState(generateAllNewDice())
+        
 
     // //function to generate random number 1-10
     // function generateAllNewDice(min, max, n=1) {
@@ -35,11 +37,15 @@ export default function Main() {
         //fill the array from index 0
         .fill(0)
         //map the 10 spaces in the array to random numbers
-        .map(() => Math.ceil(Math.random() * 6))
+        .map(() => ({
+            value: Math.ceil(Math.random() * 6), 
+            isHeld:false,
+            id: nanoid(),
+        }))
     }
 
     //map over dice here
-    const diceElements = randomNumbers.map((number, index)=>  <Die value={number} key={index} /> )
+    const diceElements = dice.map((dieObj)=>  <Die value={dieObj.value} key={dieObj.id} /> )
 
 
   return (
@@ -47,7 +53,7 @@ export default function Main() {
     <div className="dice-container">
     {diceElements}
     </div>
-    <RollBtn generateAllNewDice={generateAllNewDice} setRandomNumbers={setRandomNumbers} />
+    <RollBtn generateAllNewDice={generateAllNewDice} setDice={setDice} />
     </main>
   )
 }
