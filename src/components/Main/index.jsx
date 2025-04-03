@@ -1,5 +1,6 @@
 import React from 'react'
 import Die from '../Die'
+import RollBtn from '../rollBtn'
 import  { useState } from 'react'
 
 export default function Main() {
@@ -38,14 +39,15 @@ export default function Main() {
     }
 
     //map over dice here
-    const dice = randomNumbers.map((number, index)=>  <Die value={number} key={index} /> )
+    const diceElements = randomNumbers.map((number, index)=>  <Die value={number} key={index} /> )
 
 
   return (
     <main className="mainElement">
     <div className="dice-container">
-    {dice}
+    {diceElements}
     </div>
+    <RollBtn generateAllNewDice={generateAllNewDice} setRandomNumbers={setRandomNumbers} />
     </main>
   )
 }
