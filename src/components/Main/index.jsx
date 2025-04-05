@@ -56,7 +56,6 @@ export default function Main() {
       })
     }
 
-
     //map over dice array of objects here
     const diceElements = dice.map((dieObj)=>  (
     <Die 
