@@ -1,12 +1,17 @@
 import React from 'react'
 import Die from '../Die'
-import RollBtn from '../rollBtn'
+import RollBtn from '../RollBtn'
 import  { useState } from 'react'
 import { nanoid } from 'nanoid'
+import Confetti from 'react-confetti'
 
 export default function Main() {
     //Initial Value set to an object created by the generateAllNewDice Function
-    const [dice, setDice] = useState(generateAllNewDice())
+    const [dice, setDice] = useState(() => generateAllNewDice())
+    
+    const gameWon = dice.every(die => die.isHeld === true) && 
+      dice.every(die => die.value === dice[0].value) 
+      
     
     // //function to generate random number 1-10
     // function generateAllNewDice(min, max, n=1) {
@@ -42,7 +47,12 @@ export default function Main() {
             id: nanoid(),
         }))
     }
- 
+
+    /**
+     * Challenge: Allow the user to play a new game when the
+     * button is clicked
+     */
+
     function hold(id){
         //console.log(id)
         //map over the dice
@@ -70,10 +80,13 @@ export default function Main() {
 
   return (
     <main className="mainElement">
-    <div className="dice-container">
-    {diceElements}
-    </div>
-    <RollBtn generateAllNewDice={generateAllNewDice} setDice={setDice} />
+      <h1>Tenzie</h1>
+      {gameWon && <Confetti />}
+      <p className="instructions">Roll until all dice are the same. Click each die to freeze it at its current value between rolls.</p>
+      <div className="dice-container">
+       {diceElements}
+      </div>
+      <RollBtn generateAllNewDice={generateAllNewDice} setDice={setDice} gameWon={gameWon} />
     </main>
   )
 }

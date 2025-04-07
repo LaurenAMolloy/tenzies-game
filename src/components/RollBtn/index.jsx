@@ -1,23 +1,23 @@
 import React from 'react'
 
-export default function RollBtn({ setDice }) {
+export default function RollBtn({ setDice, gameWon }) {
     
   function handleRoll() {
     //map over the dice
     //if dice is not held update value to a new new random number
-    setDice(oldDice => {
-      return oldDice.map(die => 
-          die.isHeld === false ?
-          {...die,
-          value: Math.floor(Math.random() * 6) +1 
-          } : die
-      );
-    });
+    if(!gameWon) {
+      setDice(oldDice => oldDice.map(die => 
+            die.isHeld ?
+            die :
+            {...die,
+            value: Math.floor(Math.random() * 6) }
+        ))
+    } else {
+      setDice(generateAllNewDice())
+    }
   }
-      
-  
-
+    
   return (
-    <button onClick={handleRoll}>Roll</button>
+    <button onClick={handleRoll}>{gameWon ? "Won" : "Roll"}</button>
   )
 }
